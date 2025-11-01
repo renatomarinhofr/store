@@ -1,67 +1,127 @@
-# store
+# Store Manager
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplicação Vue 3 que simula o gerenciamento de produtos para usuários administradores e tenants. O projeto aplica MVVM, Camada de serviços dedicada, TanStack Query para dados reativos, PrimeVue como biblioteca UI e json-server como backend fake.
 
-## Recommended IDE Setup
+## Arquitetura e tecnologias
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Vue 3 + Vite** para o frontend SPA.
+- **MVVM modular**: módulos `auth` e `products` com pastas `models`, `viewmodels` e `views`.
+- **Pinia** (`src/core/stores`) centraliza autenticação e hidratação em `localStorage`.
+- **TanStack Query** (`src/core/providers`) gerencia cache e sincronização de dados.
+- **Serviços Axios** (`src/core/services`) consomem a API fake com prefixo dinâmico por role e geram JWT fake.
+- **Tema PrimeVue customizado** (`src/themes/storePreset.ts`) com preset Aura adaptado ao visual claro.
+- **JSON Server** (`server/server.js`) expõe endpoints `/login`, `/admin/products`, `/tenant/products`.
+- **Playwright** para testes end-to-end focados no fluxo de login.
 
-## Recommended Browser Setup
+Estrutura principal:
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+```
+src/
+  core/               # infraestrutura (stores, services, utils, providers)
+  modules/
+    auth/             # telas, viewmodels e modelos de autenticação
+    products/         # telas e viewmodels de produtos (tabela/prateleira)
+  assets/styles/      # estilos globais (tema claro baseado em Inter)
+  themes/             # preset do PrimeVue
+  router/             # rotas protegidas por guarda
+```
 
-## Type Support for `.vue` Imports in TS
+## Pré-requisitos
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- Node.js 20.19 ou 22.12+
+- npm 10+
+- Navegador Chromium (para os testes e2e).
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+## Instalação
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Servidor fake (json-server)
+
+Inicie o backend local em `http://127.0.0.1:3333`:
 
 ```sh
+npm run server
+```
+
+Endpoints principais:
+
+- `POST /login` (retorna token e role)
+- `GET /admin/products`
+- `GET /tenant/products`
+- CRUD completo em `/admin/products/:id` ou `/tenant/products/:id`
+
+## Desenvolvimento
+
+```sh
+# inicia Vite em http://127.0.0.1:5173
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Variáveis de ambiente relevantes:
+
+- `VITE_API_URL` (opcional) altera a URL base da API; padrão `http://127.0.0.1:3333`.
+
+## Builds e checagens
 
 ```sh
-npm run build
-```
-
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
-
-```sh
-# Install browsers for the first run
-npx playwright install
-
-# When testing on CI, must build the project first
+# type-check (vue-tsc) + build de produção
 npm run build
 
-# Runs the end-to-end tests
-npm run test:e2e
-# Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
-# Runs the tests in debug mode
-npm run test:e2e -- --debug
-```
+# apenas type-check
+npm run type-check
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
+# lint (ESLint + Oxlint)
 npm run lint
+
+# formatar código
+npm run format
 ```
+
+## Testes end-to-end (Playwright)
+
+Os testes focam em:
+
+- Validação de formulário de login.
+- Tratamento de erro de credenciais.
+- Sucesso: geração de JWT fake, persistência em `localStorage`, redirecionamento.
+- Toggle de visibilidade da senha.
+
+Passos recomendados:
+
+```sh
+# instalar navegadores necessários (executar uma vez)
+npx playwright install chromium
+
+# garantir dependências
+npm install
+
+# iniciar json-server em outro terminal
+npm run server
+
+# executar suite Chromium
+npm run test:e2e
+```
+
+Em ambientes sem permissão para abrir portas (ex.: CI restrito), suba o dev server manualmente em outro host/porta permitido e ajuste a `baseURL` via variáveis (ex.: `PLAYWRIGHT_BASE_URL=http://... npm run test:e2e`).
+
+## Convenções MVVM
+
+- **Models**: contratos de dados, sem lógica.
+- **ViewModels**: estado reativo e chamadas de serviço/TanStack Query.
+- **Views**: componentes PrimeVue conectados ao viewmodel via Composition API.
+
+## Autenticação e tokens
+
+- `POST /login` retorna o token do provider e a role.
+- `auth.service.ts` cria JWT fake assinado localmente e armazena ambos os tokens.
+- `auth.store.ts` persiste usuário em `localStorage` (`store.auth.user`) e injeta prefixo (`/admin` ou `/tenant`) nas requisições Axios por meio do interceptor em `httpClient.ts`.
+- `router/index.ts` protege rotas privadas e redireciona usuários logados para `/produtos`.
+
+## Estilo e Acessibilidade
+
+- Fonte padrão [Inter].
+- Tema claro com tokens customizados para botões, inputs e superfícies.
+- Componentes PrimeVue configurados para inserir labels flutuantes e feedback textual.
