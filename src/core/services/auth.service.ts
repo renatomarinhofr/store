@@ -50,7 +50,26 @@ export async function login(credentials: UserCredentials): Promise<Authenticated
 }
 
 export function logout(): void {
-  // placeholder for future logout rules (e.g. revoke token endpoint)
+  void httpClient
+    .post(
+      '/logout',
+      {},
+      {
+        useRolePrefix: false,
+      },
+    )
+    .catch((error) => {
+      if (isAxiosError(error)) {
+        console.warn('Falha ao revogar sessão remota.', error.response?.data ?? error.message)
+      } else {
+        console.warn('Falha ao revogar sessão remota.', error)
+      }
+    })
+
+  if (typeof window !== 'undefined') {
+    window.localStorage.removeItem('store.e2e.autoConfirmDelete')
+    window.localStorage.removeItem('store.auth.user')
+  }
 }
 
 export async function registerUser(payload: RegisterPayload): Promise<void> {
