@@ -41,7 +41,7 @@ server.post('/login', (req, res) => {
   const user = db.get('login').find({ email, password }).value()
 
   if (!user) {
-    return res.status(401).json({ message: 'Invalid credentials.' })
+    return res.status(401).json({ message: 'Credenciais inválidas.' })
   }
 
   return res.json({

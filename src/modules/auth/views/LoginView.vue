@@ -35,7 +35,7 @@ const handleNavigateToRegister = () => {
         <form class="login__form" @submit.prevent="handleSubmit">
           <FloatLabel class="login__field">
             <InputText
-              id="email"
+              id="login-email"
               type="email"
               class="login__input"
               placeholder=" "
@@ -43,21 +43,29 @@ const handleNavigateToRegister = () => {
               :model-value="state.form.email"
               @update:modelValue="updateField('email', $event ?? '')"
             />
-            <label for="email">Email</label>
+            <label for="login-email">Email</label>
           </FloatLabel>
 
           <FloatLabel class="login__field login__password">
             <Password
-              id="password"
+              inputId="login-password"
               class="login__input"
               placeholder=" "
               :feedback="false"
               toggleMask
               autocomplete="current-password"
               :model-value="state.form.password"
+              :pt="{
+                maskIcon: {
+                  'data-testid': 'password-toggle',
+                },
+                unmaskIcon: {
+                  'data-testid': 'password-toggle',
+                },
+              }"
               @update:modelValue="updateField('password', $event ?? '')"
             />
-            <label for="password">Senha</label>
+            <label for="login-password">Senha</label>
           </FloatLabel>
 
           <Message

@@ -11,7 +11,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "server": "node server/server.js",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=chromium",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint:oxlint": "oxlint . --fix -D correctness --ignore-path .gitignore",
