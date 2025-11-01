@@ -84,6 +84,14 @@ const currencyFormatter = new Intl.NumberFormat('pt-BR', {
 const placeholderImage = 'https://via.placeholder.com/120x120.png?text=Produto'
 const formatCurrency = (value: number) => currencyFormatter.format(value)
 
+const shouldAutoConfirmDelete = () => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
+  return window.localStorage.getItem('store.e2e.autoConfirmDelete') === 'true'
+}
+
 const resetForm = () => {
   Object.assign(form, defaultForm())
   delete form.id
@@ -153,6 +161,33 @@ const handleDeleteProduct = (product: Product, target?: EventTarget | null) => {
     return
   }
 
+  const executeRemoval = async () => {
+    try {
+      await deleteProduct(product.id)
+      toast.add({
+        severity: 'success',
+        summary: 'Produto removido',
+        detail: `${product.name} foi excluído.`,
+        life: 3000,
+      })
+    } catch (error) {
+      toast.add({
+        severity: 'error',
+        summary: 'Erro ao remover',
+        detail:
+          error instanceof Error
+            ? error.message
+            : 'Não foi possível remover o produto. Tente novamente.',
+        life: 4000,
+      })
+    }
+  }
+
+  if (shouldAutoConfirmDelete()) {
+    void executeRemoval()
+    return
+  }
+
   confirm.require({
     message: `Deseja realmente excluir "${product.name}"?`,
     header: 'Remover produto',
@@ -162,25 +197,7 @@ const handleDeleteProduct = (product: Product, target?: EventTarget | null) => {
     acceptLabel: 'Excluir',
     rejectLabel: 'Cancelar',
     accept: async () => {
-      try {
-        await deleteProduct(product.id)
-        toast.add({
-          severity: 'success',
-          summary: 'Produto removido',
-          detail: `${product.name} foi excluído.`,
-          life: 3000,
-        })
-      } catch (error) {
-        toast.add({
-          severity: 'error',
-          summary: 'Erro ao remover',
-          detail:
-            error instanceof Error
-              ? error.message
-              : 'Não foi possível remover o produto. Tente novamente.',
-          life: 4000,
-        })
-      }
+      await executeRemoval()
     },
   })
 }

@@ -81,7 +81,14 @@ const handleToggleStatus = (product: Product) => {
     <Column header="Ações" style="width: 11rem">
       <template #body="{ data }">
         <div class="products-table__actions">
-          <Button icon="pi pi-pencil" rounded text severity="info" @click="handleEdit(data)" />
+          <Button
+            icon="pi pi-pencil"
+            rounded
+            text
+            severity="info"
+            :aria-label="`Editar ${data.name}`"
+            @click="handleEdit(data)"
+          />
           <Button
             v-if="props.isAdmin"
             icon="pi pi-trash"
@@ -89,12 +96,16 @@ const handleToggleStatus = (product: Product) => {
             text
             severity="danger"
             :disabled="props.isDeletingProduct"
+            :aria-label="`Excluir ${data.name}`"
             @click="(event) => handleDelete(event, data)"
           />
           <InputSwitch
             v-if="props.isAdmin"
             :modelValue="data.status === 'activated'"
             :disabled="props.isUpdatingStatus"
+            :inputId="`product-status-${data.id}`"
+            :ariaLabel="`Alternar status de ${data.name}`"
+            :aria-label="`Alternar status de ${data.name}`"
             @update:modelValue="() => handleToggleStatus(data)"
           />
         </div>

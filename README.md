@@ -23,7 +23,7 @@ src/
     products/
       components/     # cabeçalho, tabela, prateleira e formulário reutilizáveis
       views/          # telas compostas a partir dos componentes
-  assets/styles/      # estilos globais (tema claro baseado em Inter)
+  assets/styles/      # estilos globais (tema claro)
   themes/             # preset do PrimeVue
   router/             # rotas protegidas por guarda
 ```
@@ -84,12 +84,13 @@ npm run format
 
 ## Testes end-to-end (Playwright)
 
-Os testes focam em:
+Os testes cobrem:
 
-- Validação de formulário de login.
-- Tratamento de erro de credenciais.
-- Sucesso: geração de JWT fake, persistência em `localStorage`, redirecionamento.
-- Toggle de visibilidade da senha.
+- Validação de formulário de login, erros de credenciais, persistência de tokens e toggle de senha.
+- Fluxo completo da página de produtos para _admin_: CRUD via tabela, alteração de status, drag-and-drop na prateleira, context menu e exclusão.
+- Restrições de _tenant_: sem exclusão/toggle/drag, mas com criação e edição garantidas.
+
+Para viabilizar o fluxo admin sem dependência do modal de confirmação (PrimeVue `ConfirmDialog`), a view lê a flag `store.e2e.autoConfirmDelete` do `localStorage`. Os testes Playwright definem essa flag em `seedAuthenticatedUser`, fazendo com que exclusões sejam aceitas automaticamente apenas durante os testes.
 
 Passos recomendados:
 
@@ -103,8 +104,11 @@ npm install
 # iniciar json-server em outro terminal
 npm run server
 
-# executar suite Chromium
+# executar suite Chromium (login + produtos)
 npm run test:e2e
+
+# apenas a suite de produtos
+npx playwright test e2e/products.spec.ts --project=chromium
 ```
 
 Em ambientes sem permissão para abrir portas (ex.: CI restrito), suba o dev server manualmente em outro host/porta permitido e ajuste a `baseURL` via variáveis (ex.: `PLAYWRIGHT_BASE_URL=http://... npm run test:e2e`).

@@ -63,6 +63,7 @@ const handleDrop = (event: DragEvent, status: ProductStatus) => {
 <template>
   <div class="products-shelf">
     <section
+      data-testid="products-shelf-activated"
       class="products-shelf__column"
       :class="{
         'products-shelf__column--droppable': dragOverStatus === 'activated',
@@ -83,6 +84,7 @@ const handleDrop = (event: DragEvent, status: ProductStatus) => {
       </p>
 
       <article
+        data-testid="products-shelf-card"
         v-for="product in props.activeProducts"
         :key="product.id"
         class="products-shelf__card"
@@ -108,6 +110,7 @@ const handleDrop = (event: DragEvent, status: ProductStatus) => {
     </section>
 
     <section
+      data-testid="products-shelf-disabled"
       class="products-shelf__column"
       :class="{
         'products-shelf__column--droppable': dragOverStatus === 'disabled',
@@ -128,6 +131,7 @@ const handleDrop = (event: DragEvent, status: ProductStatus) => {
       </p>
 
       <article
+        data-testid="products-shelf-card"
         v-for="product in props.inactiveProducts"
         :key="product.id"
         class="products-shelf__card"

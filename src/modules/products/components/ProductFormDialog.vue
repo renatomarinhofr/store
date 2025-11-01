@@ -66,6 +66,7 @@ const handleCancel = () => {
         <label for="product-price">Preço</label>
         <InputNumber
           id="product-price"
+          inputId="product-price-input"
           v-model="form.price"
           mode="currency"
           currency="BRL"
