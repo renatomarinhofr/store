@@ -208,9 +208,7 @@ const handleToggleStatus = async (product: Product) => {
       severity: 'error',
       summary: 'Erro ao atualizar',
       detail:
-        error instanceof Error
-          ? error.message
-          : 'Não foi possível alterar o status do produto.',
+        error instanceof Error ? error.message : 'Não foi possível alterar o status do produto.',
       life: 4000,
     })
   }
@@ -605,11 +603,7 @@ const handleRowDelete = (event: MouseEvent, product: Product) => {
       </form>
     </Dialog>
 
-    <ContextMenu
-      ref="contextMenuRef"
-      :model="contextMenuItems"
-      @hide="clearSelection"
-    />
+    <ContextMenu ref="contextMenuRef" :model="contextMenuItems" @hide="clearSelection" />
   </section>
 </template>
 
@@ -709,7 +703,9 @@ const handleRowDelete = (event: MouseEvent, product: Product) => {
   padding: 1.25rem;
   border: 2px dashed transparent;
   min-height: 360px;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .products-shelf__column--droppable {
@@ -758,7 +754,9 @@ const handleRowDelete = (event: MouseEvent, product: Product) => {
   border: 1px solid rgba(148, 163, 184, 0.25);
   background-color: #ffffff;
   cursor: grab;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
   margin-bottom: 0.75rem;
 }
 

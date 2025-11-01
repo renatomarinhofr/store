@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 
 import { useAuthStore } from '../stores/auth.store'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3333'
+const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://127.0.0.1:3333'
 
 export const httpClient = axios.create({
   baseURL: API_BASE_URL,

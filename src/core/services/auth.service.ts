@@ -3,6 +3,7 @@ import { isAxiosError } from 'axios'
 import type {
   AuthenticatedUser,
   AuthResponse,
+  RegisterPayload,
   UserCredentials,
 } from '@/modules/auth/models/auth'
 
@@ -50,4 +51,28 @@ export async function login(credentials: UserCredentials): Promise<Authenticated
 
 export function logout(): void {
   // placeholder for future logout rules (e.g. revoke token endpoint)
+}
+
+export async function registerUser(payload: RegisterPayload): Promise<void> {
+  try {
+    await httpClient.post(
+      '/register',
+      {
+        ...payload,
+        createdAt: new Date().toISOString(),
+      },
+      {
+        useRolePrefix: false,
+      },
+    )
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      const message =
+        typeof error.response.data?.message === 'string'
+          ? error.response.data.message
+          : 'Não foi possível concluir o cadastro.'
+      throw new Error(message)
+    }
+    throw error
+  }
 }

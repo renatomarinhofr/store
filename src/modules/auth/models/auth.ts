@@ -20,3 +20,10 @@ export interface AuthenticatedUser {
 export interface AuthState {
   currentUser: AuthenticatedUser | null
 }
+
+export interface RegisterPayload {
+  name: string
+  email: string
+  password: string
+  role: UserRole
+}

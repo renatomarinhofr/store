@@ -50,6 +50,45 @@ server.post('/login', (req, res) => {
   })
 })
 
+server.post('/register', (req, res) => {
+  const { name, email, password, role = 'tenant' } = req.body ?? {}
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Nome, e-mail e senha são obrigatórios.' })
+  }
+
+  const existingUser = db.get('users').find((user) => user.email === email).value()
+  if (existingUser) {
+    return res.status(409).json({ message: 'Este e-mail já está cadastrado.' })
+  }
+
+  const newUser = {
+    id: Date.now(),
+    name,
+    email,
+    password,
+    role,
+  }
+
+  db.get('users').push(newUser).write()
+
+  db.get('login')
+    .push({
+      id: Date.now(),
+      email,
+      password,
+      role,
+      token: `token-${role}-${Date.now()}`,
+    })
+    .write()
+
+  if (!db.has(role).value()) {
+    db.set(role, { products: [] }).write()
+  }
+
+  return res.status(201).json({ message: 'Usuário cadastrado com sucesso.' })
+})
+
 server.get('/:role/products', (req, res) => {
   const products = getProductsCollection(req.params.role)
 
