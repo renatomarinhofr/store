@@ -6,7 +6,7 @@
         "name": "Notebook gamer",
         "price": 3500,
         "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
-        "description": "Notebook potente para o dia a dia",
+        "description": "Notebook potente para o dia a dia e games",
         "status": "activated"
       },
       {
@@ -22,7 +22,7 @@
         "description": "teclado mecânico redragon",
         "image": "https://m.media-amazon.com/images/I/71Bk2A2WmOL._AC_UF894,1000_QL80_.jpg",
         "price": 900,
-        "status": "activated",
+        "status": "disabled",
         "id": 3
       },
       {
@@ -30,7 +30,7 @@
         "description": "‎Kit Venum Boxe Muay Thai 14 Oz Luva Bandagem Bucal New Impact Evo Preto Profissional.",
         "image": "https://m.media-amazon.com/images/I/61hWs8QCfuL._AC_SX679_.jpg",
         "price": 299,
-        "status": "disabled",
+        "status": "activated",
         "id": 4
       }
     ]
@@ -41,7 +41,7 @@
         "id": 1,
         "name": "Mouse",
         "price": 150,
-        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+        "image": "https://images.tcdn.com.br/img/img_prod/745260/mouse_gamer_para_jogo_3_200_dpi_optico_com_led_rgb_usb_exbom_61_1_2872550bb7359107aab68d259639a64e.jpg",
         "description": "Mouse sem fio (wireless)",
         "status": "activated"
       },
@@ -49,9 +49,17 @@
         "id": 2,
         "name": "Teclado",
         "price": 250,
-        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+        "image": "https://images.tcdn.com.br/img/img_prod/1146605/teclado_gamer_gaming_master_com_led_rgb_anti_ghost_k_mex_km52_1387_1_5140e8fc0c11908ebc92876d0eaf77cc.jpg",
         "description": "Teclado mecânico",
         "status": "disabled"
+      },
+      {
+        "name": "Headset Gamer",
+        "description": "",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmZKgV2ZZVMdT93sKoc7mlSmD42Bf0lrGXFQ&s",
+        "price": 199,
+        "status": "activated",
+        "id": 3
       }
     ]
   },
