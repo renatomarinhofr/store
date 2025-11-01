@@ -1,0 +1,58 @@
+{
+  "admin": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Notebook",
+        "price": 3500,
+        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+        "description": "Notebook potente para o dia a dia",
+        "status": "activated"
+      },
+      {
+        "id": 2,
+        "name": "Monitor",
+        "price": 1500,
+        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+        "description": "Monitor 27 polegadas",
+        "status": "disabled"
+      }
+    ]
+  },
+  "tenant": {
+    "products": [
+      {
+        "id": 1,
+        "name": "Mouse",
+        "price": 150,
+        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+        "description": "Mouse sem fio",
+        "status": "activated"
+      },
+      {
+        "id": 2,
+        "name": "Teclado",
+        "price": 250,
+        "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800",
+        "description": "Teclado mecânico",
+        "status": "disabled"
+      }
+    ]
+  },
+  "login": [
+    {
+      "id": 1,
+      "email": "admin@test.com",
+      "password": "123",
+      "role": "admin",
+      "token": "token-admin"
+    },
+    {
+      "id": 2,
+      "email": "tenant@test.com",
+      "password": "123",
+      "role": "tenant",
+      "token": "token-tenant"
+    }
+  ]
+}

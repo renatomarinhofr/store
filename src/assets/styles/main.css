@@ -1,0 +1,89 @@
+:root {
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  color: #0f172a;
+  background-color: #f3f4f6;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+.p-inputtext,
+.p-password-input {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  border-radius: 0.75rem;
+  padding-block: 0.75rem;
+  padding-inline: 1rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.p-inputtext::placeholder,
+.p-password-input::placeholder {
+  color: #64748b;
+}
+
+.p-inputtext:focus,
+.p-password-input:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.12);
+}
+
+.p-button {
+  background-color: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+  border-radius: 0.75rem;
+  padding-block: 0.75rem;
+  padding-inline: 1.25rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.p-button:hover {
+  background-color: #1f2937;
+  border-color: #1f2937;
+}
+
+.p-button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.18);
+}
+
+.p-button.p-button-link {
+  background: transparent;
+  border: none;
+  color: #0f172a;
+  padding: 0;
+  border-radius: 0.5rem;
+}
+
+.p-message {
+  border-radius: 0.75rem;
+}
