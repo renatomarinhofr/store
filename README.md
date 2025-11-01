@@ -20,7 +20,9 @@ src/
   core/               # infraestrutura (stores, services, utils, providers)
   modules/
     auth/             # telas, viewmodels e modelos de autenticação
-    products/         # telas e viewmodels de produtos (tabela/prateleira)
+    products/
+      components/     # cabeçalho, tabela, prateleira e formulário reutilizáveis
+      views/          # telas compostas a partir dos componentes
   assets/styles/      # estilos globais (tema claro baseado em Inter)
   themes/             # preset do PrimeVue
   router/             # rotas protegidas por guarda
@@ -112,6 +114,13 @@ Em ambientes sem permissão para abrir portas (ex.: CI restrito), suba o dev ser
 - **Models**: contratos de dados, sem lógica.
 - **ViewModels**: estado reativo e chamadas de serviço/TanStack Query.
 - **Views**: componentes PrimeVue conectados ao viewmodel via Composition API.
+
+### Componentização das views de produtos
+
+- `ProductsHeader.vue`: exibe título, usuário logado e ações globais (novo produto/logout).
+- `ProductsTable.vue`: tabela PrimeVue isolada que emite eventos de edição, exclusão e alteração de status.
+- `ProductsShelf.vue`: prateleira drag-and-drop com estados ativo/inativo e layout ajustado para mobile.
+- `ProductFormDialog.vue`: formulário reutilizável com `v-model` do estado do diálogo e dados do produto.
 
 ## Autenticação e tokens
 
